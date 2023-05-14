@@ -91,6 +91,12 @@ void Team::attack(Team* other)
                 if(!closest_enemy->isAlive()){closest_enemy=findClosestEnemy(other);}
                 cowboy->shoot(closest_enemy);            
             }
+        }
+    }
+    for(character* mem : this->members)
+    {
+        if(mem->isAlive())
+        {
             if(mem->getType()=="Ninja")
             {
                 Ninja* ninja = dynamic_cast<Ninja*>(mem);
