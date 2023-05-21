@@ -1,22 +1,23 @@
 #include "Character.hpp"
 using namespace ariel;
 
-double character::distance(character* other)
+double Character::distance(Character* other)
 {
     double dist= this->getLocation().distance(other->getLocation());
     return dist;
 }
 
-void character::hit(int damage)
+void Character::hit(int damage)
 {
+    if(damage<0){__throw_invalid_argument("Damage can't be negative!");}
     this->lifePoints-=damage;
     if(this->lifePoints<=0)
     {
-        this->lifePoints=0;
+        this->lifePoints=0;        
     }
 }
 
-string character::print()
+string Character::print()
 {
     if(this->isAlive())
     {
@@ -27,26 +28,18 @@ string character::print()
     return str;
 }
 
-void Cowboy::shoot(character* enemy)
-{
-    if(this->isAlive() && this->hasboolets())
-    {
-        enemy->hit(10);
-        this->bulletsNum-=1;
-    }
-    else{this->reload();}
-}
-
-void Ninja::move(character* enemy)
+void Ninja::move(Character* enemy)
 {
     this->location = this->location.moveTowards(this->getLocation(),enemy->getLocation(),this->speed);
 }
 
-void Ninja::slash(character* enemy)
+void Ninja::slash(Character* enemy)
 {
+    if(enemy==this){__throw_runtime_error("Self harm...?");}
+    if(!enemy->isAlive()){__throw_runtime_error("Enemy is dead!");}
+    if(!this->isAlive()){__throw_runtime_error("Character is dead!");}
     if(this->isAlive() && (this->distance(enemy)<1))
     {
         enemy->hit(40);
     }
-    else{this->move(enemy);}
 }

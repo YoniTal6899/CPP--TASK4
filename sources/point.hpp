@@ -19,7 +19,7 @@ namespace ariel
             double get_x() const{return this->x_loc;}
             double get_y() const{return this->y_loc;}
             double distance(Point other);
-            Point moveTowards(Point src, Point dst, double distance);
+            static Point moveTowards(Point src, Point dst, double distance);
             string print();
         
     };
